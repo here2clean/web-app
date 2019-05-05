@@ -78,6 +78,7 @@
 }
 .polaroids div:after {
   content: attr(title);
+  font-style: italic;
 }
 .polaroids img {
   border: 1px solid #C9C9C9;
@@ -91,6 +92,19 @@
   max-height: 80px;
   padding-bottom: 15px;
   padding-top: 15px;
+}
+
+.error {
+  color: white;
+  background-color: #FF7373;
+}
+
+.force-align-right {
+  float:right;
+}
+
+.main-content {
+  min-height: 90vh;
 }
 
 @keyframes App-logo-spin {
