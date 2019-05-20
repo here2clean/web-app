@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background: rgba(255,180,115,1);
+  background: #26c281;
 }
 
 .App-logo {
@@ -26,7 +26,7 @@
 .white-h1 {
   color:white;
   font-weight: bold;
-  text-shadow: #FFB473 1px 1px, #FFB473 -1px 1px, #FFB473 -1px -1px, #FFB473 1px -1px;
+  text-shadow: #26c281 1px 1px, #26c281 -1px 1px, #26c281 -1px -1px, #26c281 1px -1px;
 }
 
 .ant-input {
@@ -107,6 +107,9 @@
   min-height: 90vh;
 }
 
+.registerContainer {
+    padding-top: 50px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

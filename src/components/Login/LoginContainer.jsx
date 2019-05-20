@@ -31,7 +31,7 @@ class LoginContainer extends Component {
                                 {firebase => <WrappedLoginForm firebase={firebase}/>}
                             </FirebaseContext.Consumer>
                         </Card><br/><br/>
-                        <p>Not a user yet?</p><a href="#"><h2 className="white-h1"> Sign up !</h2></a>
+                        <p>Not a user yet?</p><a href="/register"><h2 className="white-h1"> Sign up !</h2></a>
                     </Col>
                     <Col span={4}>
                         <div className="polaroids">

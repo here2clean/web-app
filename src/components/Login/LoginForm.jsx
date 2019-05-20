@@ -46,14 +46,14 @@ class LoginForm extends React.Component {
         }
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">
-                <Divider orientation="left">Username</Divider>
+                <Divider orientation="left">E-mail</Divider>
                 <Form.Item>
                     {getFieldDecorator('email', {
                         rules: [{ required: true, message: 'Please input your E-mail!' }],
                         onChange: (e) => this.onChange(e, 'note'),
                         value: email
                     })(
-                        <Input name="email" prefix={<Icon type="user" style={{ color: 'rgba(255,180,115,1)' }} />} placeholder="Username" />
+                        <Input name="email" prefix={<Icon type="user" style={{ color: 'rgba(38, 194, 129, 1)' }} />} placeholder="E-mail" />
                     )}
                 </Form.Item>
                 <Divider orientation="left">Password</Divider>
@@ -63,7 +63,7 @@ class LoginForm extends React.Component {
                         onChange: (e) => this.onChange(e, 'note'),
                         value: password
                     })(
-                        <Input name="password" prefix={<Icon type="lock" style={{ color: 'rgba(255,180,115,1)' }} />} type="password" placeholder="Password" />
+                        <Input name="password" prefix={<Icon type="lock" style={{ color: 'rgba(38, 194, 129, 1)' }} />} type="password" placeholder="Password" />
                     )}
                 </Form.Item>
                 <Form.Item>

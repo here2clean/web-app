@@ -2,8 +2,7 @@ import React from 'react';
 import Navigation from "../Navigation/Navigation";
 import {Card, Col, Row} from "antd";
 
-
-class HomeContainer extends React.Component {
+class EventsContainer extends React.Component {
 
     render() {
         return (
@@ -21,6 +20,6 @@ class HomeContainer extends React.Component {
             </div>
         );
     }
-};
+}
 
-export default HomeContainer;
+export default EventsContainer;
