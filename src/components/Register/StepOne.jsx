@@ -6,25 +6,49 @@ class StepOne extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
-            password: ''
+            email: null,
+            password: null,
+            confirmPwd: null
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.errorHandling = this.errorHandling.bind(this);
     }
 
     handleSubmit() {
-
-        this.props.next();
+        if (this.errorHandling() !== false) {
+            this.setState({error: {
+                message: this.errorHandling()
+                }});
+        } else {
+            this.props.next(this.state);
+        }
     };
 
     onChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     };
 
+    errorHandling() {
+        const emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const { email, password, confirmPwd } = this.state;
+
+        if (email === null || password === null || confirmPwd === null) {
+            return 'Every fields must be filled';
+        }
+
+        if (!emailReg.test(email)) return 'Incorrect e-mail format';
+
+        if (password !== confirmPwd) return 'Passwords must be the same';
+
+        return false;
+    }
+
+
+
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { email, password, error } = this.state;
+        const { email, password, confirmPwd, error } = this.state;
 
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">
@@ -46,6 +70,15 @@ class StepOne extends React.Component {
                         value: password
                     })(
                         <Input name="password" prefix={<Icon type="lock" style={{ color: 'rgba(38, 194, 129, 1)' }} />} type="password" placeholder="Choose wisely" />
+                    )}
+                </Form.Item>
+                <Form.Item>
+                    {getFieldDecorator('confirmPwd', {
+                        rules: [{ required: true, message: 'Please input your Password!' }],
+                        onChange: (e) => this.onChange(e, 'note'),
+                        value: confirmPwd
+                    })(
+                        <Input name="confirmPwd" prefix={<Icon type="lock" style={{ color: 'rgba(38, 194, 129, 1)' }} />} type="password" placeholder="Please Confirm" />
                     )}
                 </Form.Item>
                 <Form.Item>

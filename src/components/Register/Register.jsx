@@ -11,7 +11,7 @@ const steps = [
         title: 'Credentials'
     },
     {
-        title: 'Name'
+        title: 'Informations'
     },
     {
         title: 'Done'
@@ -23,25 +23,28 @@ class Register extends React.Component {
         super(props);
         this.state = {
             current: 0,
-            redirect: false
+            redirect: false,
+            flowProps: {}
         };
         this.redirect = this.redirect.bind(this);
         this.next = this.next.bind(this);
     }
 
-    next() {
+    next = flowProps => {
+        this.setState({ data: Object.assign(this.state.flowProps, flowProps)});
         const current = this.state.current + 1;
         this.setState({ current });
-    }
+    };
 
     switcher() {
         switch (this.state.current) {
             case 0:
-                return <WrappedStepOne next={this.next}/>;
+                return <WrappedStepOne next={this.next} />;
             case 1:
-                return <WrappedStepTwo next={this.next}/>;
+                return <WrappedStepTwo next={this.next} />;
             case 2:
-                setTimeout(this.redirect,3000);
+                //setTimeout(this.redirect,3000);
+                alert(JSON.stringify(this.state.data));
                 return <h1>Thanks for joining us !</h1>;
             default:
 
@@ -51,6 +54,14 @@ class Register extends React.Component {
     redirect() {
         const redirect = true;
         this.setState({redirect});
+    }
+
+    userRegistration() {
+        //TODO
+    }
+
+    firebaseRegistration(email,password) {
+        //TODO
     }
 
     render() {
