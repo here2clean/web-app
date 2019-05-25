@@ -13,7 +13,7 @@ class LoginContainer extends Component {
 
     render() {
         return (
-            <div>
+            <div class="align-center">
                 <Row type="flex" justify="space-around" align="middle">
                     <Col span={4}>
                         <h2 className="white-h1"><i>Vu sur:</i></h2>

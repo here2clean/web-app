@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Steps, message, Card, Row, Col, Spin} from 'antd';
+import {Steps, Card, Row, Col, Spin} from 'antd';
 import {WrappedStepOne} from "./StepOne";
 import {WrappedStepTwo} from "./StepTwo";
 import {Redirect, withRouter} from "react-router-dom";
@@ -81,7 +81,7 @@ class Register extends React.Component {
                                     <Step key={item.title} title={item.title} />
                                 ))}
                             </Steps>
-                            <div className="steps-content">{this.switcher()}</div>
+                            <div className="steps-content align-center">{this.switcher()}</div>
                             <div className="steps-action">
                                 {current === steps.length - 1 && (
                                     <Spin tip="Wait for redirection..."/>

@@ -102,12 +102,20 @@
   float:right;
 }
 
+.align-center {
+  text-align: center;
+}
+
 .main-content {
   min-height: 90vh;
 }
 
 .registerContainer {
     padding-top: 50px;
+}
+
+.spaced-card {
+
 }
 @keyframes App-logo-spin {
   from {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, Button, Divider, Form, Icon, Input} from "antd";
+import {Alert, Button, Checkbox, Divider, Form, Icon, Input} from "antd";
 import {compose} from "recompose";
 
 class StepOne extends React.Component {
@@ -30,7 +30,7 @@ class StepOne extends React.Component {
     };
 
     errorHandling() {
-        const emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const emailReg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         const { email, password, confirmPwd } = this.state;
 
         if (email === null || password === null || confirmPwd === null) {
@@ -42,6 +42,13 @@ class StepOne extends React.Component {
         if (password !== confirmPwd) return 'Passwords must be the same';
 
         return false;
+    }
+
+    popUpWindow() {
+        var centerLeft = (window.innerWidth/2)-(window.innerWidth/2);
+        var centerTop = (window.innerHeight/2)-(window.innerHeight/2);
+        var windowFeatures = 'toolbar=no, location=no, directories=no, status=no, menubar=no, titlebar=no, scrollbars=no, resizable=no, ';
+        return window.open("localhost:3000/conditions", "_blank", windowFeatures +' width='+ centerLeft +', height='+ centerTop +', top='+ centerTop +', left='+ centerLeft);
     }
 
 
@@ -80,6 +87,9 @@ class StepOne extends React.Component {
                     })(
                         <Input name="confirmPwd" prefix={<Icon type="lock" style={{ color: 'rgba(38, 194, 129, 1)' }} />} type="password" placeholder="Please Confirm" />
                     )}
+                </Form.Item>
+                <Form.Item>
+                    <Checkbox>I accept the <a target="_blank" href="/conditions">general conditions</a></Checkbox>
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" onClick={this.handleSubmit}>Next</Button>

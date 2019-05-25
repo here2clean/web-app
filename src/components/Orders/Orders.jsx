@@ -34,7 +34,7 @@ class Orders extends React.Component {
                                             itemLayout="horizontal"
                                             dataSource={data}
                                             renderItem={item => (
-                                                <List.Item actions={[<a>View product</a>]}>
+                                                <List.Item actions={[<a href="/shop/455">View product</a>]}>
                                                     <List.Item.Meta
                                                         avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                                                         title={<h4>{item.title}</h4>}
