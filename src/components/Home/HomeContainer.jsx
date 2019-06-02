@@ -17,10 +17,7 @@ class HomeContainer extends React.Component {
                     <Row style={{marginTop:15}}>
                         <Col span={24}>
                             <Card className="main-content">
-                                <h2>My Incoming Events</h2>
-                                <MyEvents/>
                                 <Row>
-                                    <Divider/>
                                     <Col span={10}>
                                         <h2>My Profile</h2>
                                         <MyProfile/>
@@ -30,6 +27,9 @@ class HomeContainer extends React.Component {
                                         <MyAssociations/>
                                     </Col>
                                 </Row>
+                                <Divider/>
+                                <h2>My Incoming Events</h2>
+                                <MyEvents/>
                             </Card>
                         </Col>
                     </Row>

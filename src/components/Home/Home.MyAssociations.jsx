@@ -11,7 +11,7 @@ class MyAssociations extends React.Component {
                     <List.Item.Meta
                         title="Street Cleaners"
                     />
-                    <Button type="danger" ghost>Unregister</Button>
+                    <Button type="danger" style={{marginRight:8}} ghost>Unregister</Button>
                     <Button type="primary">View association<Icon type="right" /></Button>
                 </List.Item>
                 <List.Item>
@@ -19,7 +19,7 @@ class MyAssociations extends React.Component {
                     <List.Item.Meta
                         title="Street Cleaners"
                     />
-                    <Button type="danger" ghost>Unregister</Button>
+                    <Button type="danger" style={{marginRight:8}} ghost>Unregister</Button>
                     <Button type="primary">View association<Icon type="right" /></Button>
                 </List.Item>
             </List>

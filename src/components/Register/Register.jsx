@@ -1,8 +1,9 @@
 import React from 'react';
-import {Steps, Card, Row, Col, Spin} from 'antd';
+import {Steps, Card, Row, Col, Spin, Alert} from 'antd';
 import {WrappedStepOne} from "./StepOne";
 import {WrappedStepTwo} from "./StepTwo";
 import {Redirect, withRouter} from "react-router-dom";
+import {PostQuery} from "../GetQuery";
 
 const Step = Steps.Step;
 
@@ -28,6 +29,7 @@ class Register extends React.Component {
         };
         this.redirect = this.redirect.bind(this);
         this.next = this.next.bind(this);
+        this.firebaseRegistration = this.firebaseRegistration.bind(this);
     }
 
     next = flowProps => {
@@ -43,9 +45,11 @@ class Register extends React.Component {
             case 1:
                 return <WrappedStepTwo next={this.next} />;
             case 2:
-                //setTimeout(this.redirect,3000);
+
                 alert(JSON.stringify(this.state.data));
-                return <h1>Thanks for joining us !</h1>;
+                this.userRegistration()
+                    .then(success => console.log('Réussi'));
+                return <h1>Processing..</h1>;
             default:
 
         }
@@ -56,17 +60,40 @@ class Register extends React.Component {
         this.setState({redirect});
     }
 
-    userRegistration() {
-        //TODO
+    async userRegistration() {
+        let {firstName, lastName, birthday, address, city, zipCode, email, password} = this.state.data;
+        var parsedDate = new Date(birthday);
+        birthday = [parsedDate.getDay(),parsedDate.getMonth(),parsedDate.getFullYear()].join('/');
+        const body = {
+            "firstName": firstName,
+            "lastName": lastName,
+            "birthday": birthday,
+            "address": address,
+            "city": city,
+            "cityCode": zipCode,
+            "email": email,
+            "password": password
+        };
+        PostQuery("/volunteer/user/signUp", JSON.stringify(body));
     }
 
-    firebaseRegistration(email,password) {
-        //TODO
+    async firebaseRegistration() {
+        const { email, password } = this.state.data;
+
+        this.props.firebase
+            .doCreateUserWithEmailAndPassword(email, password)
+            .then(authUser => {
+                console.log('Registration successful');
+            })
+            .catch(error => {
+                this.setState({ current: 0, error: error });
+            });
     }
 
     render() {
         const current = this.state.current;
         const redirect = this.state.redirect;
+        const { error } = this.state;
 
         if (redirect) {
             return <Redirect to='/'/>
@@ -87,6 +114,7 @@ class Register extends React.Component {
                                     <Spin tip="Wait for redirection..."/>
                                 )}
                             </div>
+                            {error && <Alert message={error.message} type="error" showIcon/>}
                         </Card>
                     </Col>
                 </Row>

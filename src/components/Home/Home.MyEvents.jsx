@@ -12,7 +12,7 @@ class MyEvents extends React.Component {
                         title="Event"
                         description="Let's clean the streets of Paris all together !"
                     />
-                    <Button type="danger" ghost>Unregister</Button>
+                    <Button type="danger" style={{marginRight:8}} ghost>Unregister</Button>
                     <Button type="primary">View event<Icon type="right" /></Button>
                 </List.Item>
                 <List.Item>
@@ -21,7 +21,7 @@ class MyEvents extends React.Component {
                         title="Event"
                         description="Let's clean the streets of Paris all together !"
                     />
-                    <Button type="danger" ghost>Unregister</Button>
+                    <Button type="danger" style={{marginRight:8}} ghost>Unregister</Button>
                     <Button type="primary">View event<Icon type="right" /></Button>
                 </List.Item>
                 <List.Item>
@@ -30,7 +30,7 @@ class MyEvents extends React.Component {
                         title="Event"
                         description="Let's clean the streets of Paris all together !"
                     />
-                    <Button type="danger" ghost>Unregister</Button>
+                    <Button type="danger" style={{marginRight:8}} ghost>Unregister</Button>
                     <Button type="primary">View event<Icon type="right" /></Button>
                 </List.Item>
                 <List.Item>
@@ -39,7 +39,7 @@ class MyEvents extends React.Component {
                         title="Event"
                         description="Let's clean the streets of Paris all together !"
                     />
-                    <Button type="danger" ghost>Unregister</Button>
+                    <Button type="danger" style={{marginRight:8}} ghost>Unregister</Button>
                     <Button type="primary">View event<Icon type="right" /></Button>
                 </List.Item>
             </List>

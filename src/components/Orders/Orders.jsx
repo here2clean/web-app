@@ -26,7 +26,7 @@ class Orders extends React.Component {
                 <div className="main-content">
                     <Row style={{marginTop: 15}}>
                         <Col span={24}>
-                            <Card className="main-content">
+                            <Card className="main-content align-center">
                                 <h1>Your orders</h1>
                                 <Row>
                                     <Col span={20} offset={2}>
@@ -40,8 +40,8 @@ class Orders extends React.Component {
                                                         title={<h4>{item.title}</h4>}
                                                         description="Ant Design, a design language for background applications, is refined by Ant UED Team"
                                                     />
-                                                    <div>9.99$&nbsp;</div>
-                                                    <Tag color="green">CONFIRMED</Tag>
+                                                    <div>9.99$</div>
+                                                    <Tag color="green" style={{marginLeft:8}}>CONFIRMED</Tag>
                                                 </List.Item>
                                             )}
                                         />

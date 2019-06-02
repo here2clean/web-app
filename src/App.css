@@ -1,5 +1,6 @@
 .App {
   background: #26c281;
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -114,8 +115,13 @@
     padding-top: 50px;
 }
 
-.spaced-card {
+.resize-image {
+  object-fit: cover;
+}
 
+.pic-container {
+  width: 10%;
+  height: 100%;
 }
 @keyframes App-logo-spin {
   from {
