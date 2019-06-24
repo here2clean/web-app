@@ -5,12 +5,15 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import Firebase from "./components/Firebase/Firebase";
 import FirebaseContext from "./components/Firebase/FirebaseContext";
+import {UserProvider} from "./contexts/UserContext";
 
 ReactDOM.render(
     <FirebaseContext.Provider value={new Firebase()}>
-        <FirebaseContext.Consumer>
-            {firebase => <App firebase={firebase}/>}
-        </FirebaseContext.Consumer>
+        <UserProvider>
+            <FirebaseContext.Consumer>
+                {firebase => <App firebase={firebase}/>}
+            </FirebaseContext.Consumer>
+        </UserProvider>
     </FirebaseContext.Provider>,
     document.getElementById('root'));
 

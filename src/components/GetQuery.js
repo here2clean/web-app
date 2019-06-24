@@ -6,7 +6,7 @@ export async function GetQuery(route) {
         return response.json();
     }).then(function(data) {
         return data;
-    }).catch((error) => function(callback) { return 'error' });
+    }).catch((error) => { return false });
 }
 
 let header = new Headers();

@@ -29,7 +29,6 @@ class Register extends React.Component {
         };
         this.redirect = this.redirect.bind(this);
         this.next = this.next.bind(this);
-        this.firebaseRegistration = this.firebaseRegistration.bind(this);
     }
 
     next = flowProps => {
@@ -75,19 +74,6 @@ class Register extends React.Component {
             "password": password
         };
         PostQuery("/volunteer/user/signUp", JSON.stringify(body));
-    }
-
-    async firebaseRegistration() {
-        const { email, password } = this.state.data;
-
-        this.props.firebase
-            .doCreateUserWithEmailAndPassword(email, password)
-            .then(authUser => {
-                console.log('Registration successful');
-            })
-            .catch(error => {
-                this.setState({ current: 0, error: error });
-            });
     }
 
     render() {

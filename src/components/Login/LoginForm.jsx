@@ -3,6 +3,8 @@ import React from "react";
 import {Redirect} from "react-router-dom";
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
+import {withUserContext} from "../Contexts/UserProvider";
+import {GetQuery} from "../GetQuery";
 
 const INITIAL_STATE = {
     email: '',
@@ -16,6 +18,7 @@ class LoginForm extends React.Component {
         super(props);
 
         this.state = { ...INITIAL_STATE};
+        this.getUser = this.getUser.bind(this);
     }
 
     handleSubmit = event => {
@@ -24,7 +27,8 @@ class LoginForm extends React.Component {
         this.props.firebase
             .doSignInWithEmailAndPassword(email, password)
             .then(() => {
-                this.setState({ redirect: true });
+               this.getUser(this.props)
+                    .catch(error => {this.setState({error})})
             })
             .catch(error => {
                 this.setState({ error });
@@ -36,6 +40,18 @@ class LoginForm extends React.Component {
     onChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     };
+
+    async getUser() {
+        const { email } = this.state;
+        const user = await GetQuery("/volunteer/findByEmail?email="+email)
+        this.setState({user: user});
+        this.storeUser(this.props);
+    }
+
+    storeUser(props) {
+        const setUser = props.context.setUser;
+
+    }
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -76,5 +92,5 @@ class LoginForm extends React.Component {
 }
 
 const WrappedLoginForm = compose(
-    Form.create({ name: 'login_form' }), withRouter)(LoginForm);
+    Form.create({ name: 'login_form' }), withRouter, withUserContext)(LoginForm);
 export {WrappedLoginForm};
