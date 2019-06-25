@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Typography } from 'antd';
-import {UserContext, withUserContext} from "../Contexts/UserProvider";
+import {withUserContext} from "../../App";
 
 class MyProfile extends React.Component {
 

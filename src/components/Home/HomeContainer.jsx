@@ -4,8 +4,7 @@ import {Card, Col, Divider, Row} from "antd";
 import MyEvents from "./Home.MyEvents";
 import MyAssociations from "./Home.MyAssociations";
 import MyProfile from "./Home.MyProfile";
-import Conditions from "../Register/Conditions";
-import {withUserContext} from "../Contexts/UserProvider";
+import {withUserContext} from "../../App";
 import Loading from "../Loading/Loading";
 
 

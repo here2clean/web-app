@@ -3,7 +3,7 @@ import React from "react";
 import {Redirect} from "react-router-dom";
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import {withUserContext} from "../Contexts/UserProvider";
+import {withUserContext} from "../../App";
 import {GetQuery} from "../GetQuery";
 
 const INITIAL_STATE = {
@@ -19,6 +19,7 @@ class LoginForm extends React.Component {
 
         this.state = { ...INITIAL_STATE};
         this.getUser = this.getUser.bind(this);
+        this.storeUser = this.storeUser.bind(this);
     }
 
     handleSubmit = event => {
@@ -50,6 +51,7 @@ class LoginForm extends React.Component {
 
     storeUser(props) {
         const setUser = props.context.setUser;
+        setUser(this.state.user);
 
     }
 
