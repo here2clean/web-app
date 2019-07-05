@@ -1,7 +1,9 @@
-
-export async function GetQuery(route) {
+export async function GetQuery(route,token) {
+    let header = new Headers();
+    header.append("Token",token);
     return fetch('http://localhost:8085/api'+route, {
-        method: 'GET'
+        method: 'GET',
+        headers: header
     }).then(function(response) {
         return response.json();
     }).then(function(data) {
@@ -9,9 +11,9 @@ export async function GetQuery(route) {
     }).catch((error) => { return false });
 }
 
-let header = new Headers();
-header.append("Content-type","application/json");
 export async function PostQuery(route, body) {
+    let header = new Headers();
+    header.append("Content-type","application/json;charset=UTF-8");
     return fetch('http://localhost:8085/api'+route, {
         method: 'POST',
         body: body,

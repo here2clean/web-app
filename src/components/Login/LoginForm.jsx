@@ -27,14 +27,17 @@ class LoginForm extends React.Component {
 
         this.props.firebase
             .doSignInWithEmailAndPassword(email, password)
-            .then(() => {
-               this.getUser(this.props)
-                   .then(() => {
-                       if (this.props.context.user !== null) {
-                           this.setState({redirect: true});
-                       }
-                   })
-                   .catch(error => {this.setState({error})})
+            .then(response => {
+                response.user.getIdToken()
+                    .then(token => {
+                        this.getUser(token)
+                            .then(() => {
+                                if (this.props.context.user !== null) {
+                                    this.setState({redirect: true});
+                                }
+                            })
+                            .catch(error => {this.setState({error})})
+                    })
             })
             .catch(error => {
                 this.setState({ error });
@@ -47,9 +50,10 @@ class LoginForm extends React.Component {
         this.setState({ [event.target.name]: event.target.value });
     };
 
-    async getUser() {
+    async getUser(token) {
         const { email } = this.state;
-        const user = await GetQuery("/volunteer/findByEmail?email="+email)
+        const user = await GetQuery("/volunteer/findByEmail?email="+email,token);
+        user.authToken = token;
         this.setState({user: user});
         this.storeUser(this.props);
     }
