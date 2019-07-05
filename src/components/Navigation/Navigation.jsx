@@ -1,7 +1,15 @@
 import React from 'react';
 import {Menu, Icon, Modal, Button} from 'antd';
+import {NavLink, withRouter} from "react-router-dom";
+import {compose} from "recompose";
+import {withUserContext} from "../../App";
 
 class Navigation extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.handleOk = this.handleOk.bind(this);
+    }
 
     state = { visible: false };
 
@@ -13,6 +21,8 @@ class Navigation extends React.Component {
 
     handleOk = e => {
         console.log(e);
+        this.props.context.setUser(null);
+        this.props.context.disconnect();
         this.setState({
             visible: false,
         });
@@ -30,16 +40,16 @@ class Navigation extends React.Component {
             <div name="navigation" className="align-center">
                 <Menu mode="horizontal" defaultSelectedKeys={this.props.selected}>
                     <Menu.Item key="home">
-                        <a href="/home"><Icon type="home" />Home</a>
+                        <NavLink to="/home"><Icon type="home" />Home</NavLink>
                     </Menu.Item>
                     <Menu.Item key="associations">
-                        <a href="/associations"><Icon type="team" />Associations</a>
+                        <NavLink to="/associations"><Icon type="team" />Associations</NavLink>
                     </Menu.Item>
                     <Menu.Item key="events">
-                        <a href="/events"><Icon type="pushpin" />Events</a>
+                        <NavLink to="/events"><Icon type="pushpin" />Events</NavLink>
                     </Menu.Item>
                     <Menu.Item key="orders">
-                        <a href="/orders"><Icon type="shopping-cart" />My Orders</a>
+                        <NavLink to="/orders"><Icon type="shopping-cart" />My Orders</NavLink>
                     </Menu.Item>
                     <Menu.Item className="force-align-right" key="logout" onClick={this.showModal}>
                         <Icon type="poweroff" />Logout
@@ -66,4 +76,5 @@ class Navigation extends React.Component {
     }
 };
 
-export default Navigation;
+const WrappedNavigation = compose(withUserContext,withRouter)(Navigation);
+export {WrappedNavigation};

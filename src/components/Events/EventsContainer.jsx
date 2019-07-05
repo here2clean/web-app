@@ -1,5 +1,5 @@
 import React from 'react';
-import Navigation from "../Navigation/Navigation";
+import {WrappedNavigation} from "../Navigation/Navigation";
 import {Card, Col, Input, Row} from "antd";
 import EventRow from "./EventRow";
 import EventDrawer from "./EventDrawer";
@@ -29,7 +29,7 @@ class EventsContainer extends React.Component {
     render() {
         return (
             <div>
-                <Navigation selected={this.props.selected}/>
+                <WrappedNavigation selected={this.props.selected}/>
                 <div class="main-content">
                     <Row style={{marginTop:15}}>
                         <Row><Col span={6} offset={9}><Input.Search placeholder="Search by name.."/></Col></Row><br/>

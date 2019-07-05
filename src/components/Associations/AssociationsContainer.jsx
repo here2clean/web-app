@@ -1,5 +1,5 @@
 import React from 'react';
-import Navigation from "../Navigation/Navigation";
+import {WrappedNavigation} from "../Navigation/Navigation";
 import {Card, Col, Row, Input, Drawer} from "antd";
 import AssociationsRow from "./AssociationsRow";
 import {GetQuery} from "../GetQuery";
@@ -38,7 +38,7 @@ class AssociationsContainer extends React.Component {
             return <Loading/>
         } else {
             return <div>
-                <Navigation selected={this.props.selected}/>
+                <WrappedNavigation selected={this.props.selected}/>
                 <div className="main-content">
                     <Row style={{marginTop: 15}}>
                         <Row><Col span={6} offset={9}><Input.Search placeholder="Search by name.."/></Col></Row><br/>
@@ -56,12 +56,11 @@ class AssociationsContainer extends React.Component {
                             onClose={this.closeInfosModal}
                             visible={this.state.assosModal}
                         >
-                            <p>Some contents...</p>
-                            <p>Some contents...</p>
-                            <p>Some contents...</p>
+                            <h4>Description: </h4><p>{this.state.modalData.description}</p>
                         </Drawer>
                     </Row>
                 </div>
+
             </div>;
         }
     }

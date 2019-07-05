@@ -29,7 +29,12 @@ class LoginForm extends React.Component {
             .doSignInWithEmailAndPassword(email, password)
             .then(() => {
                this.getUser(this.props)
-                    .catch(error => {this.setState({error})})
+                   .then(() => {
+                       if (this.props.context.user !== null) {
+                           this.setState({redirect: true});
+                       }
+                   })
+                   .catch(error => {this.setState({error})})
             })
             .catch(error => {
                 this.setState({ error });
@@ -52,7 +57,6 @@ class LoginForm extends React.Component {
     storeUser(props) {
         const setUser = props.context.setUser;
         setUser(this.state.user);
-
     }
 
     render() {

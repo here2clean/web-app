@@ -1,11 +1,12 @@
 import React from 'react';
-import Navigation from "../Navigation/Navigation";
+import {WrappedNavigation} from "../Navigation/Navigation";
 import {Card, Col, Divider, Row} from "antd";
 import MyEvents from "./Home.MyEvents";
 import MyAssociations from "./Home.MyAssociations";
 import MyProfile from "./Home.MyProfile";
 import {withUserContext} from "../../App";
 import Loading from "../Loading/Loading";
+import {withRouter} from "react-router-dom";
 
 
 class HomeContainer extends React.Component {
@@ -16,7 +17,7 @@ class HomeContainer extends React.Component {
         } else {
             return (
                 <div>
-                    <Navigation selected={this.props.selected}/>
+                    <WrappedNavigation selected={this.props.selected}/>
                     <div className="main-content">
                         <Row style={{marginTop:15}}>
                             <Col span={24}>
@@ -44,4 +45,4 @@ class HomeContainer extends React.Component {
     }
 };
 
-export default withUserContext(HomeContainer);
+export default withRouter(withUserContext(HomeContainer));

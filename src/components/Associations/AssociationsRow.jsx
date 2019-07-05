@@ -33,6 +33,7 @@ class AssociationsRow extends React.Component {
                   <Col span={8}>
                       <Card
                           //style={{ width: 300 }}
+                          title={this.props.data.name}
                           cover={
                               <img
                                   alt="example"
@@ -44,9 +45,7 @@ class AssociationsRow extends React.Component {
                               ,<IconText type="euro" theme="twoTone" twoToneColor="#fcd670" text="Donate" onClick={this.openPaypalModal}/>]}
                       >
                           <a onClick={() => this.props.openModal(this.props.data)}>
-                              <Badge count={<Icon type="info-circle" theme="filled" size="large" style={{ fontSize: 20 }} />}>
-                                  <span className="head-example"/>
-                              </Badge>
+                              <Badge count={<Icon type="info-circle" theme="filled" size="large" style={{ fontSize: 20 }} />}/>
                           </a>
                           <Modal
                               title="Donation Modal"

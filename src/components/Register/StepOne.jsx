@@ -44,15 +44,6 @@ class StepOne extends React.Component {
         return false;
     }
 
-    popUpWindow() {
-        var centerLeft = (window.innerWidth/2)-(window.innerWidth/2);
-        var centerTop = (window.innerHeight/2)-(window.innerHeight/2);
-        var windowFeatures = 'toolbar=no, location=no, directories=no, status=no, menubar=no, titlebar=no, scrollbars=no, resizable=no, ';
-        return window.open("localhost:3000/conditions", "_blank", windowFeatures +' width='+ centerLeft +', height='+ centerTop +', top='+ centerTop +', left='+ centerLeft);
-    }
-
-
-
     render() {
         const { getFieldDecorator } = this.props.form;
         const { email, password, confirmPwd, error } = this.state;

@@ -1,5 +1,5 @@
 import React from 'react';
-import Navigation from "../Navigation/Navigation";
+import {WrappedNavigation} from "../Navigation/Navigation";
 import {Avatar, Card, Col, List, Row, Tag} from "antd";
 
 const data = [
@@ -22,7 +22,7 @@ class Orders extends React.Component {
     render() {
         return(
             <div>
-                <Navigation selected={this.props.selected}/>
+                <WrappedNavigation selected={this.props.selected}/>
                 <div className="main-content">
                     <Row style={{marginTop: 15}}>
                         <Col span={24}>

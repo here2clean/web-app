@@ -23,7 +23,8 @@ const Sandbox = loadable({loader: () => import('./components/Sandbox'), loading:
 //FFB473
 const UserContext = createContext({
     user: null,
-    setUser: () => {}
+    setUser: () => {},
+    disconnect: () => {}
 });
 
 class App extends React.Component {
@@ -35,15 +36,14 @@ class App extends React.Component {
             userContext: {
                 user: null,
                 setUser: (user) => {
-                    customHistory.push('/home')
-                    this.setState({auth:true, userContext:{user:user}});
-                }
+                    this.setState({auth:true, userContext:{user:user, setUser: this.state.userContext.setUser, disconnect: this.state.userContext.disconnect}});
+                },
+                disconnect: () => {this.setState({auth:false});}
             }
         };
     }
 
     render() {
-
         const PrivateRoute = ({component: Component, user, ...rest}) => (
             <Route {...rest} render={(props) => (
                 this.state.auth
