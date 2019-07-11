@@ -8,6 +8,11 @@
   pointer-events: none;
 }
 
+.App-logo-dark {
+  height: 5vmin;
+  pointer-events: none;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -101,6 +106,10 @@
 
 .force-align-right {
   float:right;
+}
+
+.force-align-left {
+  float:left;
 }
 
 .align-center {

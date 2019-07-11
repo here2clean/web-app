@@ -61,6 +61,7 @@ class LoginForm extends React.Component {
     storeUser(props) {
         const setUser = props.context.setUser;
         setUser(this.state.user);
+        localStorage.setItem("user",JSON.stringify(this.state.user));
     }
 
     render() {

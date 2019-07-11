@@ -2,14 +2,22 @@ import React, { Component } from 'react';
 import {Card, Col, Row} from "antd/lib/index";
 import {WrappedLoginForm} from "./LoginForm";
 import FirebaseContext from '../Firebase/FirebaseContext';
-import {withRouter} from 'react-router-dom';
+import {Redirect, withRouter} from 'react-router-dom';
 import tf1 from "../../resources/tf1.png";
 import direct from "../../resources/direct_matin.png";
 import parisien from "../../resources/parisien.png";
 import logo from "../../resources/logo.svg";
 import woman from "../../resources/woman.png";
+import {Popconfirm} from "antd";
 
 class LoginContainer extends Component {
+    redirectionUser() {
+        window.location.href = 'register';
+    }
+
+    redirectionAssociation() {
+        window.location.href = 'associationRegistration'
+    }
 
     render() {
         return (
@@ -31,7 +39,16 @@ class LoginContainer extends Component {
                                 {firebase => <WrappedLoginForm firebase={firebase}/>}
                             </FirebaseContext.Consumer>
                         </Card><br/><br/>
-                        <p>Not a user yet?</p><a href="/register"><h2 className="white-h1"> Sign up !</h2></a>
+                        <p>Not a user yet?</p>
+                        <Popconfirm
+                            title="What kind of user are you?"
+                            onConfirm={this.redirectionAssociation}
+                            onCancel={this.redirectionUser}
+                            okText="Association"
+                            cancelText="Volunteer"
+                        >
+                            <h2><a className="white-h1" href="#">Sign up !</a></h2>
+                        </Popconfirm>
                     </Col>
                     <Col span={4}>
                         <div className="polaroids">

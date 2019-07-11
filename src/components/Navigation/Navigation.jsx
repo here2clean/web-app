@@ -3,12 +3,13 @@ import {Menu, Icon, Modal, Button} from 'antd';
 import {NavLink, withRouter} from "react-router-dom";
 import {compose} from "recompose";
 import {withUserContext} from "../../App";
+import logo_dark from "../../resources/logo_dark.svg";
 
 class Navigation extends React.Component {
 
     constructor(props) {
         super(props);
-        this.handleOk = this.handleOk.bind(this);
+        this.handleDisconnect = this.handleDisconnect.bind(this);
     }
 
     state = { visible: false };
@@ -19,7 +20,7 @@ class Navigation extends React.Component {
         });
     };
 
-    handleOk = e => {
+    handleDisconnect = e => {
         console.log(e);
         this.props.context.setUser(null);
         this.props.context.disconnect();
@@ -39,6 +40,9 @@ class Navigation extends React.Component {
         return (
             <div name="navigation" className="align-center">
                 <Menu mode="horizontal" defaultSelectedKeys={this.props.selected}>
+                    <Menu.Item key="logo" className="force-align-left" >
+                        <img className="App-logo-dark" src={logo_dark}/>
+                    </Menu.Item>
                     <Menu.Item key="home">
                         <NavLink to="/home"><Icon type="home" />Home</NavLink>
                     </Menu.Item>
@@ -57,13 +61,13 @@ class Navigation extends React.Component {
                     <Modal
                         title="Logout"
                         visible={this.state.visible}
-                        onOk={this.handleOk}
+                        onOk={this.handleDisconnect}
                         onCancel={this.handleCancel}
                         footer={[
                             <Button key="Cancel" onClick={this.handleCancel}>
                                 Cancel
                             </Button>,
-                            <Button key="Disconnect" type="primary" onClick={this.handleOk}>
+                            <Button key="Disconnect" type="primary" onClick={this.handleDisconnect}>
                                 Disconnect
                             </Button>,
                         ]}

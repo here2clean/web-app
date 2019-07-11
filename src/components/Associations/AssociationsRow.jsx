@@ -2,6 +2,7 @@ import React from 'react';
 import {Row, Col, Icon, Card, Badge, Modal, InputNumber} from 'antd';
 import * as PropTypes from 'prop-types';
 import PaypalExpressBtn from "react-paypal-express-checkout";
+import {NavLink} from "react-router-dom";
 
 class AssociationsRow extends React.Component {
     constructor(props) {
@@ -28,6 +29,8 @@ class AssociationsRow extends React.Component {
             </span>
         );
 
+        const shopRoute = "/shop/"+this.props.data.id;
+
         return (
             <div>
                   <Col span={8}>
@@ -41,7 +44,7 @@ class AssociationsRow extends React.Component {
                               />
                           }
                           actions={[<IconText type="schedule" theme="twoTone" twoToneColor="#26c281" text="Events"/>
-                              ,<IconText type="shop" theme="twoTone" twoToneColor="#26c281" text="Shop"/>
+                              ,<NavLink to={shopRoute}><IconText type="shop" theme="twoTone" twoToneColor="#26c281" text="Shop"/></NavLink>
                               ,<IconText type="euro" theme="twoTone" twoToneColor="#fcd670" text="Donate" onClick={this.openPaypalModal}/>]}
                       >
                           <a onClick={() => this.props.openModal(this.props.data)}>
@@ -54,7 +57,7 @@ class AssociationsRow extends React.Component {
                               onCancel={this.openPaypalModal}
                               footer={[<PaypalExpressBtn/>]}
                           >
-                              <h4>Street Cleaning Asso</h4>
+                              <h4>{this.props.data.name}</h4>
                               <InputNumber
                                   defaultValue={3}
                                   formatter={value => `€ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}

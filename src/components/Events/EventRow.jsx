@@ -2,6 +2,10 @@ import React from 'react';
 import {Row, Col, List, Icon, Button} from 'antd';
 
 class EventRow extends React.Component {
+    constructor(props) {
+        super(props)
+    }
+
     render() {
 
         const IconText = ({ type, text }) => (
@@ -20,8 +24,8 @@ class EventRow extends React.Component {
                         <List.Item
                             key="key"
                             actions={[
-                                <IconText type="team" text="12" />,
-                                <Button type="primary" shape="round" icon="info-circle" size="small" onClick={() => this.props.open({title:"Nom de l'event", desc: "This event is based on street cleaning"})}>More</Button>,
+                                <IconText type="team" text={this.props.data.numberOfParticipant} />,
+                                <Button type="primary" shape="round" icon="info-circle" size="small" onClick={() => this.props.open({title:this.props.data.name, desc: this.props.data.description, location:this.props.data.location})}>More</Button>,
                                 <Button type="primary" size="small">Join</Button>
                             ]}
                             extra={
@@ -33,9 +37,9 @@ class EventRow extends React.Component {
                             }
                         >
                             <List.Item.Meta
-                                title="Street Cleaning in Paris"
+                                title={this.props.data.name}
                             />
-                            <p>Description de l'événement Description de l'événement Description de l'événement Description de l'événement Description de l'événement</p>
+                            <p>{this.props.data.description}</p>
                         </List.Item>
 
                     </List>

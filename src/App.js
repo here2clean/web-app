@@ -15,6 +15,8 @@ import EventsContainer from "./components/Events/EventsContainer";
 import Conditions from "./components/Register/Conditions";
 import Loading from "./components/Loading/Loading";
 import { createBrowserHistory } from "history";
+import ShopContainer from "./components/Shop/ShopContainer";
+import RegisterPro from "./components/RegisterPro/RegisterPro";
 
 const customHistory = createBrowserHistory();
 
@@ -32,13 +34,16 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            auth: false,
+            auth: !!localStorage.getItem('user'),
             userContext: {
-                user: null,
+                user: JSON.parse(localStorage.getItem('user')) || null,
                 setUser: (user) => {
                     this.setState({auth:true, userContext:{user:user, setUser: this.state.userContext.setUser, disconnect: this.state.userContext.disconnect}});
                 },
-                disconnect: () => {this.setState({auth:false});}
+                disconnect: () => {
+                    this.setState({auth:false});
+                    localStorage.clear();
+                }
             }
         };
     }
@@ -59,13 +64,15 @@ class App extends React.Component {
                             <Route exact path='/' component={LoginContainer} />
                             <PrivateRoute path='/home' component={() => <HomeContainer selected={['home']}/>} />
                             <Route path='/register' component={() => <Register firebase={this.props.firebase}/>} />
-                            <PrivateRoute path='/orders' component={() => <Orders selected={['orders']}/>} />
-                            <PrivateRoute path='/associations' component={() => <AssociationsContainer
+                            <Route path='/associationRegistration' component={() => <RegisterPro firebase={this.props.firebase}/>} />
+                            <PrivateRoute exact path='/orders' component={() => <Orders selected={['orders']}/>} />
+                            <PrivateRoute exact path='/associations' component={() => <AssociationsContainer
                                 selected={['associations']}/>} />
-                            <PrivateRoute path='/events' component={() => <EventsContainer selected={['events']}/>} />
+                            <PrivateRoute exact path='/events' component={() => <EventsContainer selected={['events']}/>} />
                             <PrivateRoute exact path='/conditions' component={Conditions} />
                             <PrivateRoute exact path='/sandbox' component={Sandbox}/>
                             <PrivateRoute exact path='/loading' component={Loading}/>
+                            <PrivateRoute path='/shop/:shopid' component={ShopContainer}/>
                         </div>
                     </Suspense>
                 </Router>

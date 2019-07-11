@@ -1,8 +1,12 @@
 import React from 'react';
 import {WrappedNavigation} from "../Navigation/Navigation";
-import {Card, Col, Input, Row} from "antd";
+import {Alert, Card, Col, Input, Row} from "antd";
 import EventRow from "./EventRow";
 import EventDrawer from "./EventDrawer";
+import {GetQuery} from "../GetQuery";
+import {withUserContext} from "../../App";
+import Loading from "../Loading/Loading";
+import Error from "../Error";
 
 class EventsContainer extends React.Component {
 
@@ -12,9 +16,12 @@ class EventsContainer extends React.Component {
             drawer: false,
             drawerData: {}
         };
-
+        GetQuery('/event/all', this.props.context.user.authToken)
+            .then(events => this.setState({events: events}))
+            .catch(error => this.setState({error: true}));
         this.openDrawer = this.openDrawer.bind(this);
         this.closeDrawer = this.closeDrawer.bind(this);
+        this.search = this.search.bind(this);
     }
 
     openDrawer(drawerData) {
@@ -26,25 +33,50 @@ class EventsContainer extends React.Component {
         this.setState({drawer: false});
     }
 
+    search(name) {
+        if (name === "") {
+            GetQuery('/event/all', this.props.context.user.authToken)
+                .then(events => this.setState({events: events, error: false}))
+                .catch(error => this.setState({error: error}));
+        } else {
+            GetQuery('/event/research/name?name='+name, this.props.context.user.authToken)
+                .then(events => {
+                            if (!events) { this.setState({error:{message:"Couldn't find any results for '"+name+"', sorry !"}}) }
+                            else {
+                                this.setState({events: events, error: false})
+                            }
+                        }
+                )
+                .catch(() => this.setState({error:{message:"Couldn't find any results, sorry !"}}));
+        }
+    }
+
     render() {
-        return (
-            <div>
-                <WrappedNavigation selected={this.props.selected}/>
-                <div class="main-content">
-                    <Row style={{marginTop:15}}>
-                        <Row><Col span={6} offset={9}><Input.Search placeholder="Search by name.."/></Col></Row><br/>
-                        <Col span={24}>
-                            <Card className="main-content">
-                                <EventRow open={this.openDrawer}/>
-                                <EventRow open={this.openDrawer}/>
-                            </Card>
-                        </Col>
-                    </Row>
+        const {error} = this.state;
+        if (this.state.events === undefined) {
+            return <Loading/>
+        } else {
+            return (
+                <div>
+                    <WrappedNavigation selected={this.props.selected}/>
+                    <div class="main-content">
+                        <Row style={{marginTop:15}}>
+                            <Row><Col span={6} offset={9}><Input.Search onSearch={value => this.search(value)} placeholder="Search by name.."/></Col></Row><br/>
+                            <Col span={24}>
+                                <Card className="main-content">
+                                    {error && <Alert message={error.message} type="error" showIcon/>}
+                                    {this.state.events === false ? <Error/> : this.state.events.map(event => {
+                                        return <EventRow open={this.openDrawer} key={event.id} data={event}/>;
+                                    })}
+                                </Card>
+                            </Col>
+                        </Row>
+                    </div>
+                    <EventDrawer visible={this.state.drawer} data={this.state.drawerData} close={this.closeDrawer}/>
                 </div>
-                <EventDrawer visible={this.state.drawer} data={this.state.drawerData} close={this.closeDrawer}/>
-            </div>
-        );
+            );
+        }
     }
 }
 
-export default EventsContainer;
+export default withUserContext(EventsContainer);

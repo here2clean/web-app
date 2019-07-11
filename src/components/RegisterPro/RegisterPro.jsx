@@ -1,7 +1,7 @@
 import React from 'react';
 import {Steps, Card, Row, Col, Spin, Alert} from 'antd';
-import {WrappedStepOne} from "./StepOne";
-import {WrappedStepTwo} from "./StepTwo";
+import {WrappedStepOnePro} from "./StepOnePro";
+import {WrappedStepTwoPro} from "./StepTwoPro";
 import {Redirect, withRouter} from "react-router-dom";
 import {PostQuery} from "../GetQuery";
 
@@ -19,7 +19,7 @@ const steps = [
     },
 ];
 
-class Register extends React.Component {
+class RegisterPro extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -40,9 +40,9 @@ class Register extends React.Component {
     switcher() {
         switch (this.state.current) {
             case 0:
-                return <WrappedStepOne next={this.next} />;
+                return <WrappedStepOnePro next={this.next} />;
             case 1:
-                return <WrappedStepTwo next={this.next} />;
+                return <WrappedStepTwoPro next={this.next} />;
             case 2:
 
                 alert(JSON.stringify(this.state.data));
@@ -60,20 +60,15 @@ class Register extends React.Component {
     }
 
     async userRegistration() {
-        let {firstName, lastName, birthday, address, city, zipCode, email, password} = this.state.data;
-        var parsedDate = new Date(birthday);
-        birthday = [parsedDate.getDay(),parsedDate.getMonth(),parsedDate.getFullYear()].join('/');
+        let {name, numberRna, description, email, password} = this.state.data;
         const body = {
-            "firstName": firstName,
-            "lastName": lastName,
-            "birthday": birthday,
-            "address": address,
-            "city": city,
-            "cityCode": zipCode,
+            "name": name,
             "email": email,
-            "password": password
+            "numberRna": numberRna,
+            "password": password,
+            "description": description
         };
-        PostQuery("/volunteer/signUp", JSON.stringify(body));
+        PostQuery("/association/register", JSON.stringify(body));
     }
 
     render() {
@@ -109,4 +104,4 @@ class Register extends React.Component {
     }
 }
 
-export default withRouter(Register);
+export default withRouter(RegisterPro);
