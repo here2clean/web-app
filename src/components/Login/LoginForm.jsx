@@ -1,4 +1,4 @@
-import {Button, Divider, Form, Icon, Input, Alert} from "antd";
+import {Button, Divider, Form, Icon, Input, Alert, Switch} from "antd";
 import React from "react";
 import {Redirect} from "react-router-dom";
 import { withRouter } from 'react-router-dom';
@@ -10,6 +10,7 @@ const INITIAL_STATE = {
     email: '',
     password: '',
     error: null,
+    pro: false,
     redirect: false
 };
 
@@ -20,6 +21,7 @@ class LoginForm extends React.Component {
         this.state = { ...INITIAL_STATE};
         this.getUser = this.getUser.bind(this);
         this.storeUser = this.storeUser.bind(this);
+        this.switch = this.switch.bind(this);
     }
 
     handleSubmit = event => {
@@ -50,10 +52,15 @@ class LoginForm extends React.Component {
         this.setState({ [event.target.name]: event.target.value });
     };
 
+    switch = (checked) => {
+        this.setState({pro: checked});
+    };
+
     async getUser(token) {
-        const { email } = this.state;
+        const { email, pro } = this.state;
         const user = await GetQuery("/volunteer/findByEmail?email="+email,token);
         user.authToken = token;
+        user.pro = pro;
         this.setState({user: user});
         this.storeUser(this.props);
     }
@@ -66,13 +73,23 @@ class LoginForm extends React.Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { email, password, error, redirect } = this.state;
+        const { email, password, error, pro, redirect } = this.state;
 
         if (redirect) {
             return <Redirect to='/home'/>
         }
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">
+                <h3>Association:</h3>
+                <Form.Item>
+                    {getFieldDecorator('pro', {
+                        rules: [{ required: true, message: 'Indicate your role !' }],
+                        onChange: (e) => this.switch(e, 'note'),
+                        value: pro
+                    })(
+                        <Switch/>
+                    )}
+                </Form.Item>
                 <Divider orientation="left">E-mail</Divider>
                 <Form.Item>
                     {getFieldDecorator('email', {

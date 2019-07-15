@@ -1,15 +1,30 @@
 import React from 'react';
 import {Button, List, Modal} from "antd";
 import {withUserContext} from "../../App";
+import {PostQuery} from "../GetQuery";
 
 class CartModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            finalPrice: null,
-            order: []
-        }
+            finalPrice: null
+        };
+        this.order = this.order.bind(this);
     }
+
+    order() {
+        let order = [];
+        this.props.context.shop.map(item => {
+            let itemConcat = {
+                "idProduct": item.product[0].id,
+                "quantity": item.quantity
+            };
+            order.push(itemConcat);
+        });
+        PostQuery("/command/newCommand?volunteer_id="+this.props.context.user.id, JSON.stringify(order),this.props.context.user.authToken)
+            .then(() => this.props.context.clearCart())
+    }
+
 
     render() {
         let disabled;
@@ -20,7 +35,7 @@ class CartModal extends React.Component {
                 title="Your cart"
                 visible={this.props.visible}
                 onCancel={this.props.cancel}
-                footer={[<Button type="primary" disabled={disabled}>Order</Button>]}
+                footer={[<Button type="primary" onClick={() => this.order()} disabled={disabled}>Order</Button>]}
             >
                 <List
                     dataSource={this.props.context.shop}

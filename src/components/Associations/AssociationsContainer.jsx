@@ -1,8 +1,8 @@
 import React from 'react';
 import {WrappedNavigation} from "../Navigation/Navigation";
-import {Card, Col, Row, Input, Drawer, Alert} from "antd";
+import {Card, Col, Row, Input, Drawer, Alert, Button} from "antd";
 import AssociationsRow from "./AssociationsRow";
-import {GetQuery} from "../GetQuery";
+import {GetQuery, PostQuery} from "../GetQuery";
 import Loading from "../Loading/Loading";
 import Error from "../Error";
 import {withUserContext} from "../../App";
@@ -25,6 +25,7 @@ class AssociationsContainer extends React.Component {
         this.closeInfosModal = this.closeInfosModal.bind(this);
         this.openAssosModal = this.openAssosModal.bind(this);
         this.search = this.search.bind(this);
+        this.joinAssociation = this.joinAssociation.bind(this);
     }
 
     openAssosModal(modalData) {
@@ -57,6 +58,14 @@ class AssociationsContainer extends React.Component {
         }
     }
 
+    joinAssociation(join) {
+        let action = 'addVolunteer';
+        if (join === false) action = 'removeVolunteer';
+        const builtRoute = "/association/"+action+"?association_id="+this.state.modalData.id+"&volunteer_id="+this.props.context.user.id;
+        PostQuery(builtRoute,"",this.props.context.user.authToken)
+            .then(() => alert("done"));
+    }
+
     render() {
         const { error } = this.state;
         if (this.state.associations === undefined) {
@@ -83,6 +92,7 @@ class AssociationsContainer extends React.Component {
                             visible={this.state.assosModal}
                         >
                             <h4>Description: </h4><p>{this.state.modalData.description}</p>
+                            <Button type="primary" onClick={() => this.joinAssociation(true)}>Join</Button>
                         </Drawer>
                     </Row>
                 </div>

@@ -30,7 +30,8 @@ const UserContext = createContext({
     shop: [],
     changeCart: () => {},
     addProducts: () => {},
-    deleteProduct: () => {}
+    deleteProduct: () => {},
+    clearCart: () => {}
 });
 
 class App extends React.Component {
@@ -58,7 +59,8 @@ class App extends React.Component {
                     }));
                 },
                 addProducts: this.addProducts.bind(this),
-                deleteProduct: this.deleteProduct.bind(this)
+                deleteProduct: this.deleteProduct.bind(this),
+                clearCart: this.clearCart.bind(this)
             }
         };
     }
@@ -83,6 +85,16 @@ class App extends React.Component {
             userContext: {
                 ...this.state.userContext,
                 shop: cart
+            }
+        }))
+    }
+
+    clearCart() {
+        this.setState(prevState => ({
+            ...prevState,
+            userContext: {
+                ...this.state.userContext,
+                shop: []
             }
         }))
     }
