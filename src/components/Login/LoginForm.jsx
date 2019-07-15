@@ -11,7 +11,8 @@ const INITIAL_STATE = {
     password: '',
     error: null,
     pro: false,
-    redirect: false
+    redirect: false,
+    redirectPro: false
 };
 
 class LoginForm extends React.Component {
@@ -35,7 +36,8 @@ class LoginForm extends React.Component {
                         this.getUser(token)
                             .then(() => {
                                 if (this.props.context.user !== null) {
-                                    this.setState({redirect: true});
+                                    if (!this.state.pro) this.setState({redirect: true});
+                                    else this.setState({redirectPro: true});
                                 }
                             })
                             .catch(error => {this.setState({error})})
@@ -57,8 +59,10 @@ class LoginForm extends React.Component {
     };
 
     async getUser(token) {
+        let userType = "volunteer/findByEmail";
         const { email, pro } = this.state;
-        const user = await GetQuery("/volunteer/findByEmail?email="+email,token);
+        if (pro) userType = "association/research/email";
+        const user = await GetQuery("/"+userType+"?email="+email,token);
         user.authToken = token;
         user.pro = pro;
         this.setState({user: user});
@@ -73,10 +77,12 @@ class LoginForm extends React.Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { email, password, error, pro, redirect } = this.state;
+        const { email, password, error, pro, redirect, redirectPro } = this.state;
 
         if (redirect) {
             return <Redirect to='/home'/>
+        } else if (redirectPro) {
+            return <Redirect to='/pro/home'/>
         }
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">

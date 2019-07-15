@@ -3,7 +3,8 @@ import loadable from 'react-loadable';
 import './App.css';
 import 'antd/dist/antd.css';
 import LoginContainer from './components/Login/LoginContainer';
-import HomeContainer from './components/Home/HomeContainer'
+import HomeContainer from './components/Home/HomeContainer';
+import HomeContainerPro from './components/Home.Pro/HomeContainer.Pro';
 import {
     BrowserRouter as Router, Redirect,
     Route
@@ -125,6 +126,7 @@ class App extends React.Component {
                             <PrivateRoute exact path='/sandbox' component={Sandbox}/>
                             <PrivateRoute exact path='/loading' component={Loading}/>
                             <PrivateRoute path='/shop/:shopid' component={ShopContainer}/>
+                            <PrivateRoute path='/pro/home' component={HomeContainerPro}/>
                         </div>
                     </Suspense>
                 </Router>
