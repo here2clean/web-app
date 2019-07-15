@@ -68,7 +68,7 @@ class RegisterPro extends React.Component {
             "password": password,
             "description": description
         };
-        PostQuery("/association/register", JSON.stringify(body));
+        PostQuery("/association/register", JSON.stringify(body), null);
     }
 
     render() {

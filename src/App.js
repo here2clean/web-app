@@ -26,7 +26,11 @@ const Sandbox = loadable({loader: () => import('./components/Sandbox'), loading:
 const UserContext = createContext({
     user: null,
     setUser: () => {},
-    disconnect: () => {}
+    disconnect: () => {},
+    shop: [],
+    changeCart: () => {},
+    addProducts: () => {},
+    deleteProduct: () => {}
 });
 
 class App extends React.Component {
@@ -38,14 +42,49 @@ class App extends React.Component {
             userContext: {
                 user: JSON.parse(localStorage.getItem('user')) || null,
                 setUser: (user) => {
-                    this.setState({auth:true, userContext:{user:user, setUser: this.state.userContext.setUser, disconnect: this.state.userContext.disconnect}});
+                    this.setState({auth:true, userContext:{user:user, setUser: this.state.userContext.setUser, disconnect: this.state.userContext.disconnect, changeCart: this.state.userContext.changeCart, addProducts: this.state.userContext.addProducts, shop: this.state.shop}});
                 },
                 disconnect: () => {
                     this.setState({auth:false});
                     localStorage.clear();
-                }
+                },
+                shop: [],
+                changeCart: (cart) => {
+                    this.setState(prevState => ({
+                        userContext: {
+                            ...prevState.userContext,
+                            [prevState.userContext.shop]: cart,
+                        },
+                    }));
+                },
+                addProducts: this.addProducts.bind(this),
+                deleteProduct: this.deleteProduct.bind(this)
             }
         };
+    }
+
+    addProducts(product, quantity) {
+        if (quantity === null || quantity === undefined) quantity = 1;
+        const row = {product: [product], quantity: quantity};
+        this.setState(prevState => ({
+            ...prevState,
+            userContext: {
+                ...this.state.userContext,
+                shop: [...prevState.userContext.shop, row]
+            }
+        }))
+    };
+
+    deleteProduct(product) {
+        let cart = this.state.userContext.shop;
+        cart = cart.filter(item => item.name !== product.product[0].name && item.quantity !== product.quantity);
+        this.setState(prevState => ({
+            ...prevState,
+            userContext: {
+                ...this.state.userContext,
+                shop: cart
+            }
+        }))
     }
 
     render() {
@@ -68,6 +107,7 @@ class App extends React.Component {
                             <PrivateRoute exact path='/orders' component={() => <Orders selected={['orders']}/>} />
                             <PrivateRoute exact path='/associations' component={() => <AssociationsContainer
                                 selected={['associations']}/>} />
+                            <PrivateRoute path='/events/:eventname' component={() => <EventsContainer selected={['events']}/>} />
                             <PrivateRoute exact path='/events' component={() => <EventsContainer selected={['events']}/>} />
                             <PrivateRoute exact path='/conditions' component={Conditions} />
                             <PrivateRoute exact path='/sandbox' component={Sandbox}/>

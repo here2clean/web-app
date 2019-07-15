@@ -1,6 +1,6 @@
 import React from 'react';
 import {WrappedNavigation} from "../Navigation/Navigation";
-import {Card, Col, List, Row} from "antd";
+import {Alert, Button, Card, Col, InputNumber, List, Row} from "antd";
 import {withUserContext} from "../../App";
 import Loading from "../Loading/Loading";
 import {withRouter} from "react-router-dom";
@@ -14,39 +14,22 @@ class ShopContainer extends React.Component {
         this.state = {
             products: null
         };
-        GetQuery('/association/findById?id='+this.props.match.params.shopid, this.props.context.user.authToken)
-            .then(association => {
-                if (!association.products || association.status) { this.setState({error:{message:"No products yet, sorry !"}}) }
+        GetQuery('/product/findByAssociationId?id='+this.props.match.params.shopid, this.props.context.user.authToken)
+            .then(products => {
+                if (products.length === 0 || products.status) { this.setState({products: products, error:{message:"No products yet, sorry !"}}) }
                 else {
-                    this.setState({products: association.products, error: false})
+                    this.setState({products: products, error: false})
                 }
             })
             .catch(error => this.setState({error: true}));
     }
 
+    onChange(value, id) {
+        this.setState({ [id]: value });
+    };
+
     render() {
-        const data = [
-            {
-                title: 'Sarouel',
-                description: 'Wonderful sarouel pants, used for 7 years straight and never got washed',
-                price: "34.99$ pc."
-            },
-            {
-                title: 'Djembe',
-                description: 'Wanna make some motherfucking music and annoy all the neighborhood? Get one right now.',
-                price: "48.99$ pc."
-            },
-            {
-                title: 'Headband',
-                description: 'Too much dread locks? We feel you. Get a headband.',
-                price: "9.99$ pc."
-            },
-            {
-                title: 'Used condom',
-                description: "Let's recycle together.",
-                price: "0.99$ pc."
-            },
-        ];
+        const {error} = this.state;
 
         if (this.state.products === null) {
             return <Loading/>
@@ -58,7 +41,7 @@ class ShopContainer extends React.Component {
                         <Row style={{marginTop:15}}>
                             <Col span={24}>
                                 <Card className="main-content">
-                                    {this.props.match.params.shopid}
+                                    {error && <Alert message={error.message} type="error" showIcon/>}
                                     <List
                                         grid={{ gutter: 16, column: 4 }}
                                         dataSource={this.state.products}
@@ -68,6 +51,8 @@ class ShopContainer extends React.Component {
                                                     {item.description}
                                                     <br/><br/>
                                                     <h4>Price: <b>{item.price}</b></h4>
+                                                    <InputNumber min={1} defaultValue={1} onChange={(value) => this.onChange(value,item.name)}/>
+                                                    <Button onClick={() => this.props.context.addProducts(item, this.state[item.name])}>Add to cart</Button>
                                                 </Card>
                                             </List.Item>
                                         )}

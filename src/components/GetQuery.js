@@ -11,9 +11,10 @@ export async function GetQuery(route,token) {
     }).catch((error) => { return false });
 }
 
-export async function PostQuery(route, body) {
+export async function PostQuery(route, body, token) {
     let header = new Headers();
     header.append("Content-type","application/json");
+    header.append("Authorization","Bearer "+token);
     return fetch('http://localhost:8085/api'+route, {
         method: 'POST',
         body: body,

@@ -7,6 +7,7 @@ import {GetQuery} from "../GetQuery";
 import {withUserContext} from "../../App";
 import Loading from "../Loading/Loading";
 import Error from "../Error";
+import {withRouter} from "react-router-dom";
 
 class EventsContainer extends React.Component {
 
@@ -14,11 +15,16 @@ class EventsContainer extends React.Component {
         super(props);
         this.state = {
             drawer: false,
-            drawerData: {}
+            drawerData: {},
         };
-        GetQuery('/event/all', this.props.context.user.authToken)
-            .then(events => this.setState({events: events}))
-            .catch(error => this.setState({error: true}));
+        if (Object.entries(this.props.match.params).length === 0) {
+            GetQuery('/event/all', this.props.context.user.authToken)
+                .then(events => this.setState({events: events}))
+                .catch(error => this.setState({error: true}));
+        } else {
+            this.search(this.props.match.params.eventname);
+        }
+
         this.openDrawer = this.openDrawer.bind(this);
         this.closeDrawer = this.closeDrawer.bind(this);
         this.search = this.search.bind(this);
@@ -66,7 +72,7 @@ class EventsContainer extends React.Component {
                                 <Card className="main-content">
                                     {error && <Alert message={error.message} type="error" showIcon/>}
                                     {this.state.events === false ? <Error/> : this.state.events.map(event => {
-                                        return <EventRow open={this.openDrawer} key={event.id} data={event}/>;
+                                        return <EventRow open={this.openDrawer} search={this.search} key={event.id} data={event}/>;
                                     })}
                                 </Card>
                             </Col>
@@ -79,4 +85,4 @@ class EventsContainer extends React.Component {
     }
 }
 
-export default withUserContext(EventsContainer);
+export default withRouter(withUserContext(EventsContainer));
