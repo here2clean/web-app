@@ -44,7 +44,7 @@ class CreateEvent extends React.Component {
             "urlImage": this.state.urlImage,
             "association_id": this.props.context.user.id
         };
-        PostQuery("/event/register", JSON.stringify(event), this.props.context.user.authToken)
+        PostQuery("/event/register?association_id="+this.props.context.user.id, JSON.stringify(event), this.props.context.user.authToken)
     }
 
     render() {
