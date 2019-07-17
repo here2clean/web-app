@@ -1,21 +1,32 @@
 import React from 'react';
-import {Alert, Avatar, Button, Icon, List} from 'antd';
+import {Alert, Avatar, Button, DatePicker, Icon, Input, List, Modal} from 'antd';
 import {GetQuery, PostQuery} from "../GetQuery";
 import {withUserContext} from "../../App";
 import {NavLink} from "react-router-dom";
+import {WrappedCreateEvent} from "./Home.CreateEvent.Pro";
 
 class MyEventsPro extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            myEvents: []
+            myEvents: [],
+            newEventModal: false
         };
 
         this.getMyEvents = this.getMyEvents.bind(this);
-
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
         this.getMyEvents();
 
+    }
+
+    openModal() {
+        this.setState({newEventModal: true})
+    }
+
+    closeModal() {
+        this.setState({newEventModal: false})
     }
 
     getMyEvents() {
@@ -30,6 +41,7 @@ class MyEventsPro extends React.Component {
         const inactive = this.state.myEvents.length === 0;
         return (
             <div>
+                <Button type="primary" onClick={this.openModal}>New event<Icon type="plus-circle"/></Button>
                 {inactive && <Alert message="You created no events yet" type="info" showIcon />}
                 <List bordered={true} dataSource={this.state.myEvents}
                       renderItem={item => (
@@ -45,6 +57,7 @@ class MyEventsPro extends React.Component {
 
                       )}
                 />
+                <WrappedCreateEvent visible={this.state.newEventModal} close={this.closeModal}/>
             </div>
         );
     }
