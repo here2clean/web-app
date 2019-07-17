@@ -45,13 +45,13 @@ class NavigationPro extends React.Component {
                         <img className="App-logo-dark" src={logo_dark}/>
                     </Menu.Item>
                     <Menu.Item key="home">
-                        <NavLink to="/home"><Icon type="home" />Home</NavLink>
+                        <NavLink to="/pro/home"><Icon type="home" />Home</NavLink>
                     </Menu.Item>
                     <Menu.Item key="events">
-                        <NavLink to="/events"><Icon type="pushpin" />Events</NavLink>
+                        <NavLink to="/pro/events"><Icon type="pushpin" />Events</NavLink>
                     </Menu.Item>
                     <Menu.Item key="orders">
-                        <NavLink to="/orders"><Icon type="shopping" />Orders</NavLink>
+                        <NavLink to="/pro/orders"><Icon type="shopping" />Orders</NavLink>
                     </Menu.Item>
                     <Menu.Item className="force-align-right" key="logout" onClick={this.showModal}>
                         <Icon type="poweroff" />Logout
