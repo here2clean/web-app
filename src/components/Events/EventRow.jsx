@@ -10,10 +10,10 @@ class EventRow extends React.Component {
     }
 
     participationSwitch() {
-        if (this.props.data.numberOfParticipant === 0) {
+        if (this.props.data.nbVolunteer === 0) {
             return <Button type="primary" onClick={() => this.populateEvent(this.props.data.id,this.props.context.user.id, true)} size="small">Join</Button>
         } else {
-            if (this.props.data.volunteers.filter(item => item.id === this.props.context.user.id).length > 0) {
+            if (this.props.data.volunteerDTOs.filter(item => item.id === this.props.context.user.id).length > 0) {
                 return <Button type="danger" onClick={() => this.populateEvent(this.props.data.id,this.props.context.user.id, false)} size="small">Leave</Button>
             } else {
                 return <Button type="primary" onClick={() => this.populateEvent(this.props.data.id,this.props.context.user.id, true)} size="small">Join</Button>
@@ -52,7 +52,7 @@ class EventRow extends React.Component {
                         <List.Item
                             key="key"
                             actions={[
-                                <IconText type="team" text={this.props.data.numberOfParticipant} />,
+                                <IconText type="team" text={this.props.data.nbVolunteer} />,
                                 <Button type="primary" shape="round" icon="info-circle" size="small" onClick={() => this.props.open({title:this.props.data.name, desc: this.props.data.description, location:this.props.data.location})}>More</Button>,
                                 this.participationSwitch()
                             ]}
