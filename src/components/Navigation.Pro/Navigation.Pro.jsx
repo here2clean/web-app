@@ -47,8 +47,8 @@ class NavigationPro extends React.Component {
                     <Menu.Item key="home">
                         <NavLink to="/pro/home"><Icon type="home" />Home</NavLink>
                     </Menu.Item>
-                    <Menu.Item key="events">
-                        <NavLink to="/pro/events"><Icon type="pushpin" />Events</NavLink>
+                    <Menu.Item key="shop">
+                        <NavLink to="/pro/shop"><Icon type="shop" />Shop</NavLink>
                     </Menu.Item>
                     <Menu.Item key="orders">
                         <NavLink to="/pro/orders"><Icon type="shopping" />Orders</NavLink>

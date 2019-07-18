@@ -18,6 +18,7 @@ import Loading from "./components/Loading/Loading";
 import { createBrowserHistory } from "history";
 import ShopContainer from "./components/Shop/ShopContainer";
 import RegisterPro from "./components/RegisterPro/RegisterPro";
+import ShopContainerPro from "./components/Shop.Pro/ShopContainer.Pro"
 
 const customHistory = createBrowserHistory();
 
@@ -127,6 +128,7 @@ class App extends React.Component {
                             <PrivateRoute exact path='/loading' component={Loading}/>
                             <PrivateRoute path='/shop/:shopid' component={ShopContainer}/>
                             <PrivateRoute path='/pro/home' component={HomeContainerPro}/>
+                            <PrivateRoute path='/pro/shop' component={ShopContainerPro}/>
                         </div>
                     </Suspense>
                 </Router>
