@@ -39,8 +39,8 @@ class EventDrawer extends React.Component {
                 onClose={this.props.close}
                 visible={this.props.visible}
             >
-                <h3>Title:</h3>{this.props.data.name}
-                <h3>Description:</h3>{this.props.data.description}
+                <h3>Title:</h3>{this.props.data.title}
+                <h3>Description:</h3>{this.props.data.desc}
                 {
                     lat && lng && <Map google={this.props.google} zoom={17} initialCenter={{
                         lat: lat,

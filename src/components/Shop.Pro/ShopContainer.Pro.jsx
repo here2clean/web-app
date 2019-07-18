@@ -1,10 +1,13 @@
 import React from 'react';
-import {WrappedNavigation} from "../Navigation/Navigation";
-import {Alert, Button, Card, Col, InputNumber, List, Row} from "antd";
+import {Alert, Button, Card, Col, Icon, InputNumber, List, Row} from "antd";
 import {withUserContext} from "../../App";
 import Loading from "../Loading/Loading";
 import {withRouter} from "react-router-dom";
-import {GetQuery} from "../GetQuery";
+import {DeleteQuery, GetQuery} from "../GetQuery";
+import {WrappedCreateEvent} from "../Home.Pro/Home.CreateEvent.Pro";
+import {WrappedProNavigation} from "../Navigation.Pro/Navigation.Pro";
+import {WrappedProductModal} from "./Shop.NewProductModal";
+
 
 
 class ShopContainerPro extends React.Component {
@@ -12,8 +15,24 @@ class ShopContainerPro extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            products: null
+            products: null,
+            visible: false
         };
+        this.getProducts = this.getProducts.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+        this.openModal = this.openModal.bind(this);
+        this.getProducts();
+    }
+
+    openModal() {
+        this.setState({visible: true});
+    }
+
+    closeModal() {
+        this.setState({visible: false});
+    }
+
+    getProducts() {
         GetQuery('/product/findByAssociationId?id='+this.props.context.user.id, this.props.context.user.authToken)
             .then(products => {
                 if (products.length === 0 || products.status) { this.setState({products: products, error:{message:"No products yet, sorry !"}}) }
@@ -24,8 +43,9 @@ class ShopContainerPro extends React.Component {
             .catch(error => this.setState({error: true}));
     }
 
-    onChange(value, id) {
-        this.setState({ [id]: value });
+    delete(name) {
+        DeleteQuery('/product/delete/name?name='+name, this.props.context.user.authToken)
+            .then(() => this.getProducts());
     };
 
     render() {
@@ -36,12 +56,12 @@ class ShopContainerPro extends React.Component {
         } else {
             return (
                 <div>
-                    <WrappedNavigation selected="associations"/>
+                    <WrappedProNavigation selected="associations"/>
                     <div className="main-content">
                         <Row style={{marginTop:15}}>
                             <Col span={24}>
                                 <Card className="main-content">
-                                    {error && <Alert message={error.message} type="error" showIcon/>}
+                                    {error && <Alert message={error.message} type="info" showIcon/>}
                                     <List
                                         grid={{ gutter: 16, column: 4 }}
                                         dataSource={this.state.products}
@@ -51,12 +71,13 @@ class ShopContainerPro extends React.Component {
                                                     {item.description}
                                                     <br/><br/>
                                                     <h4>Price: <b>{item.price}</b></h4>
-                                                    <InputNumber min={1} defaultValue={1} onChange={(value) => this.onChange(value,item.name)}/>
-                                                    <Button onClick={() => this.props.context.addProducts(item, this.state[item.name])}>Add to cart</Button>
+                                                    <Button type="danger" onClick={() => this.delete(item.name)}>Delete</Button>
                                                 </Card>
                                             </List.Item>
                                         )}
                                     />
+                                    <Button type="primary" onClick={this.openModal}>New product<Icon type="plus-circle"/></Button>
+                                    <WrappedProductModal visible={this.state.visible} getProducts={this.getProducts} close={this.closeModal}/>
                                 </Card>
                             </Col>
                         </Row>

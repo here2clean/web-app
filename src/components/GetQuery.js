@@ -11,6 +11,19 @@ export async function GetQuery(route,token) {
     }).catch((error) => { return false });
 }
 
+export async function DeleteQuery(route,token) {
+    let header = new Headers();
+    header.append("Authorization","Bearer "+token);
+    return fetch('http://localhost:8085/api'+route, {
+        method: 'DELETE',
+        headers: header
+    }).then(function(response) {
+        return response.json();
+    }).then(function(data) {
+        return data;
+    }).catch((error) => { return false });
+}
+
 export async function PostQuery(route, body, token) {
     let header = new Headers();
     header.append("Content-type","application/json");
