@@ -50,9 +50,6 @@ class NavigationPro extends React.Component {
                     <Menu.Item key="shop">
                         <NavLink to="/pro/shop"><Icon type="shop" />Shop</NavLink>
                     </Menu.Item>
-                    <Menu.Item key="orders">
-                        <NavLink to="/pro/orders"><Icon type="shopping" />Orders</NavLink>
-                    </Menu.Item>
                     <Menu.Item className="force-align-right" key="logout" onClick={this.showModal}>
                         <Icon type="poweroff" />Logout
                     </Menu.Item>

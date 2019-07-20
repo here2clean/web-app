@@ -9,7 +9,7 @@ class ProfilePro extends React.Component {
         super(props);
         this.state = {
             image: this.props.context.user.urlImage
-        }
+        };
         this.updateLogo = this.updateLogo.bind(this);
     }
 
@@ -32,7 +32,7 @@ class ProfilePro extends React.Component {
                 size="default"
                 onSearch={value => this.updateLogo(value)}
                 />
-                <Statistic style={{marginTop:10}} title="Members" value={1} prefix={<Icon type="smile" />} />
+                <Statistic style={{marginTop:10}} title="Members" value={this.props.context.user.volunteerDTOs.length} prefix={<Icon type="smile" />} />
             </div>
         );
     }
