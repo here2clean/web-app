@@ -6,6 +6,7 @@ import {GetQuery, PostQuery} from "../GetQuery";
 import Loading from "../Loading/Loading";
 import Error from "../Error";
 import {withUserContext} from "../../App";
+import {withRouter} from "react-router-dom";
 
 class AssociationsContainer extends React.Component {
 
@@ -19,9 +20,13 @@ class AssociationsContainer extends React.Component {
                 name: 'default'
             }
         };
-        GetQuery('/association/all', this.props.context.user.authToken)
-            .then(associations => this.setState({associations: associations}))
-            .catch(error => this.setState({error: true}));
+        if (Object.entries(this.props.match.params).length === 0) {
+            GetQuery('/association/all', this.props.context.user.authToken)
+                .then(associations => this.setState({associations: associations}))
+                .catch(error => this.setState({error: true}));
+        } else {
+            this.search(this.props.match.params.assoname);
+        }
         this.closeInfosModal = this.closeInfosModal.bind(this);
         this.openAssosModal = this.openAssosModal.bind(this);
         this.search = this.search.bind(this);
@@ -29,6 +34,13 @@ class AssociationsContainer extends React.Component {
     }
 
     openAssosModal(modalData) {
+        let join = true;
+        if (modalData.volunteerDTOs.length !== 0) {
+            let result = modalData.volunteerDTOs.filter(item => item.id === this.props.context.user.id);
+            if (result === undefined || result === null || result.length === 0) join = true;
+            else join = false
+        }
+        modalData.join = join;
         this.setState({modalData: modalData, assosModal: true});
     }
 
@@ -63,11 +75,37 @@ class AssociationsContainer extends React.Component {
         if (join === false) action = 'removeVolunteer';
         const builtRoute = "/association/"+action+"?association_id="+this.state.modalData.id+"&volunteer_id="+this.props.context.user.id;
         PostQuery(builtRoute,"",this.props.context.user.authToken)
-            .then(() => alert("done"));
+            .then(() => {
+                if (join) {
+                    this.setState(prevState => ({
+                        ...prevState,
+                        modalData: {
+                            ...this.state.modalData,
+                            join: false
+                        }
+                    }))
+                } else {
+                    this.setState(prevState => ({
+                        ...prevState,
+                        modalData: {
+                            ...this.state.modalData,
+                            join: true
+                        }
+                    }))
+                }
+            });
     }
 
     render() {
         const { error } = this.state;
+        let {style, label} = "";
+        if (this.state.modalData.join === false) {
+            style = 'danger';
+            label = 'Leave';
+        } else {
+            style = 'primary';
+            label = 'Join';
+        }
         if (this.state.associations === undefined) {
             return <Loading/>
         } else {
@@ -92,7 +130,7 @@ class AssociationsContainer extends React.Component {
                             visible={this.state.assosModal}
                         >
                             <h4>Description: </h4><p>{this.state.modalData.description}</p>
-                            <Button type="primary" onClick={() => this.joinAssociation(true)}>Join</Button>
+                            <Button type={style} onClick={() => this.joinAssociation(this.state.modalData.join)}>{label}</Button>
                         </Drawer>
                     </Row>
                 </div>
@@ -102,4 +140,4 @@ class AssociationsContainer extends React.Component {
     }
 }
 
-export default withUserContext(AssociationsContainer);
+export default withRouter(withUserContext(AssociationsContainer));

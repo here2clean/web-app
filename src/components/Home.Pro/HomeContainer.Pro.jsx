@@ -1,6 +1,6 @@
 import React from 'react';
 import {WrappedProNavigation} from "../Navigation.Pro/Navigation.Pro";
-import {Button, Card, Col, Divider, Icon, Input, Row, Search} from "antd";
+import {Button, Card, Col, Divider, Icon, Input, Row, Search, Statistic} from "antd";
 import {withUserContext} from "../../App";
 import Loading from "../Loading/Loading";
 import {withRouter} from "react-router-dom";
@@ -23,14 +23,8 @@ class HomeContainerPro extends React.Component {
                             <Col span={24}>
                                 <Card className="main-content">
                                     <Row>
-                                        <Col span={24} style={{textAlign: 'center'}}>
-                                            <Typography.Text strong>{this.props.context.user.name}</Typography.Text>
-                                        </Col>
-                                        <Col span={5}>
+                                        <Col span={5} offset={9}>
                                             <ProfilePro/>
-                                        </Col>
-                                        <Col span={13} offset={1}>
-
                                         </Col>
                                     </Row>
                                     <Divider/>

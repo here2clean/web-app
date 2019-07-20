@@ -73,7 +73,8 @@ class Register extends React.Component {
             "email": email,
             "password": password
         };
-        PostQuery("/volunteer/signUp", JSON.stringify(body),null);
+        PostQuery("/volunteer/signUp", JSON.stringify(body),null)
+            .then(() => this.redirect())
     }
 
     render() {

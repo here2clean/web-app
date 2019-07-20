@@ -10,7 +10,6 @@ import {
     Route
 } from 'react-router-dom';
 import Register from "./components/Register/Register";
-import Orders from "./components/Orders/Orders";
 import AssociationsContainer from "./components/Associations/AssociationsContainer";
 import EventsContainer from "./components/Events/EventsContainer";
 import Conditions from "./components/Register/Conditions";
@@ -119,10 +118,12 @@ class App extends React.Component {
                             <PrivateRoute path='/home' component={() => <HomeContainer selected={['home']}/>} />
                             <Route path='/register' component={() => <Register firebase={this.props.firebase}/>} />
                             <Route path='/associationRegistration' component={() => <RegisterPro firebase={this.props.firebase}/>} />
-                            <PrivateRoute exact path='/orders' component={() => <Orders selected={['orders']}/>} />
                             <PrivateRoute exact path='/associations' component={() => <AssociationsContainer
                                 selected={['associations']}/>} />
+                            <PrivateRoute exact path='/associations/:assoname' component={() => <AssociationsContainer
+                                selected={['associations']}/>} />
                             <PrivateRoute path='/events/:eventname' component={() => <EventsContainer selected={['events']}/>} />
+                            <PrivateRoute path='/eventsByAssociation/:associationId' component={() => <EventsContainer selected={['events']}/>} />
                             <PrivateRoute exact path='/events' component={() => <EventsContainer selected={['events']}/>} />
                             <PrivateRoute exact path='/conditions' component={Conditions} />
                             <PrivateRoute exact path='/sandbox' component={Sandbox}/>

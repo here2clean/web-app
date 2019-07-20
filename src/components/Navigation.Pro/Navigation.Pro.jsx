@@ -41,7 +41,7 @@ class NavigationPro extends React.Component {
         return (
             <div name="navigation" className="align-center">
                 <Menu mode="horizontal" defaultSelectedKeys={this.props.selected}>
-                    <Menu.Item key="logo" className="force-align-left" >
+                    <Menu.Item style={{pointerEvents:'none'}} key="logo" className="force-align-left" >
                         <img className="App-logo-dark" src={logo_dark}/>
                     </Menu.Item>
                     <Menu.Item key="home">

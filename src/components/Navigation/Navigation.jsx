@@ -50,7 +50,7 @@ class Navigation extends React.Component {
         return (
             <div name="navigation" className="align-center">
                 <Menu mode="horizontal" defaultSelectedKeys={this.props.selected}>
-                    <Menu.Item key="logo" className="force-align-left" >
+                    <Menu.Item key="logo" style={{pointerEvents:'none'}} className="force-align-left" >
                         <img className="App-logo-dark" src={logo_dark}/>
                     </Menu.Item>
                     <Menu.Item key="home">
@@ -61,9 +61,6 @@ class Navigation extends React.Component {
                     </Menu.Item>
                     <Menu.Item key="events">
                         <NavLink to="/events"><Icon type="pushpin" />Events</NavLink>
-                    </Menu.Item>
-                    <Menu.Item key="orders">
-                        <NavLink to="/orders"><Icon type="shopping" />My Orders</NavLink>
                     </Menu.Item>
                     <Menu.Item className="force-align-right" onClick={this.showCart}>
                         <Badge count={badgeCount} showZero>

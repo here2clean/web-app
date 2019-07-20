@@ -11,12 +11,24 @@ class MyAssociations extends React.Component {
         this.state = {
             myAssociations: []
         };
+        this.getMyAssociations = this.getMyAssociations.bind(this);
+        this.leaveAsso = this.leaveAsso.bind(this);
+        this.getMyAssociations();
+    }
 
+    getMyAssociations() {
         GetQuery('/volunteer/allAssocaition?email='+this.props.context.user.email,this.props.context.user.authToken)
             .then(result => {
                 if (!result || result.status) this.setState({myAssociations: [], error:{message:"Error"}});
                 else this.setState({myAssociations: result})
             });
+    }
+
+    leaveAsso(assoId) {
+        let route = "/association/removeVolunteer?association_id="+assoId+"&volunteer_id="+this.props.context.user.id;
+        PostQuery(route,"", this.props.context.user.authToken)
+            .then(() => this.getMyAssociations())
+
     }
 
     render() {
@@ -31,8 +43,8 @@ class MyAssociations extends React.Component {
                                   title={item.name}
                                   description={item.description}
                               />
-                              <Button type="danger" style={{marginRight:8}} ghost>Unregister</Button>
-                              <Button type="primary" ghost><NavLink to={{ pathname: '/association', state: { extRoute: '/association/research/name?name='+item.name}}}>View association</NavLink><Icon type="right" /></Button>
+                              <Button type="danger" style={{marginRight:8}} onClick={() => this.leaveAsso(item.id)} ghost>Unregister</Button>
+                              <Button type="primary"><NavLink style={{color:'#fff'}} to={'/associations/'+item.name}>View association</NavLink><Icon type="right" /></Button>
                           </List.Item>
 
                       )}

@@ -46,10 +46,10 @@ class MyEvents extends React.Component {
                               <List.Item.Meta
                                   avatar={<Avatar src={item.urlImage} />}
                                   title={item.name}
-                                  description={item.beginDate}
+                                  description={item.beginDate.substring(0,10)}
                               />
                               <Button type="danger" onClick={() => this.leaveEvent(item.id)} style={{marginRight:8}} ghost>Unregister</Button>
-                                  <Button type="primary"><NavLink to={'/events/'+item.name}>View event</NavLink><Icon type="right" /></Button>
+                                  <Button type="primary"><NavLink style={{color:'#fff'}} to={'/events/'+item.name}>View event</NavLink><Icon type="right" /></Button>
                           </List.Item>
 
                       )}

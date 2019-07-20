@@ -22,12 +22,15 @@ class EventsContainer extends React.Component {
                 .then(events => this.setState({events: events}))
                 .catch(error => this.setState({error: true}));
         } else {
-            this.search(this.props.match.params.eventname);
+            if (this.props.match.params.eventname) this.search(this.props.match.params.eventname);
+            else if (this.props.match.params.associationId) this.findByAssociation(this.props.match.params.associationId);
+
         }
 
         this.openDrawer = this.openDrawer.bind(this);
         this.closeDrawer = this.closeDrawer.bind(this);
         this.search = this.search.bind(this);
+        this.findByAssociation = this.findByAssociation.bind(this);
     }
 
     openDrawer(drawerData) {
@@ -37,6 +40,13 @@ class EventsContainer extends React.Component {
 
     closeDrawer() {
         this.setState({drawer: false});
+    }
+
+    findByAssociation(id) {
+        GetQuery('/event/allByAssociation?association_id='+id,this.props.context.user.authToken)
+            .then(result => {
+                this.setState({events: result})
+            });
     }
 
     search(name) {
@@ -71,7 +81,7 @@ class EventsContainer extends React.Component {
                             <Col span={24}>
                                 <Card className="main-content">
                                     {error && <Alert message={error.message} type="error" showIcon/>}
-                                    {this.state.events === false ? <Error/> : this.state.events.map(event => {
+                                    {this.state.events.status || this.state.events === false ? <Error result={0}/> : this.state.events.map(event => {
                                         return <EventRow open={this.openDrawer} search={this.search} key={event.id} data={event}/>;
                                     })}
                                 </Card>

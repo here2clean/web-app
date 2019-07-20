@@ -30,6 +30,7 @@ class AssociationsRow extends React.Component {
         );
 
         const shopRoute = "/shop/"+this.props.data.id;
+        const eventRoute = "/eventsByAssociation/"+this.props.data.id;
 
         return (
             <div>
@@ -40,10 +41,12 @@ class AssociationsRow extends React.Component {
                           cover={
                               <img
                                   alt="example"
-                                  src="https://www.blog.spoongraphics.co.uk/wp-content/uploads/2010/transparency-logos/15.jpg"
+                                  src={this.props.data.urlImage ? this.props.data.urlImage : "https://upload.wikimedia.org/wikipedia/commons/f/f0/GHS-pictogram-unknown.svg"}
+                                  style={{height:200,objectFit: 'contain',
+                                      marginTop: 1}}
                               />
                           }
-                          actions={[<IconText type="schedule" theme="twoTone" twoToneColor="#26c281" text="Events"/>
+                          actions={[<NavLink to={eventRoute}><IconText type="schedule" theme="twoTone" twoToneColor="#26c281" text="Events"/></NavLink>
                               ,<NavLink to={shopRoute}><IconText type="shop" theme="twoTone" twoToneColor="#26c281" text="Shop"/></NavLink>
                               ,<IconText type="euro" theme="twoTone" twoToneColor="#fcd670" text="Donate" onClick={this.openPaypalModal}/>]}
                       >
