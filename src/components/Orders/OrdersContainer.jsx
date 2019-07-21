@@ -17,7 +17,10 @@ class OrdersContainer extends React.Component {
 
     getMyOrders() {
         GetQuery("/volunteer/getCommand?id="+this.props.context.user.id,this.props.context.user.authToken)
-            .then(result => this.setState({myOrders: result}))
+            .then(result => {
+                if (result.status) this.setState({myOrders: []});
+                else this.setState({myOrders: result})
+            })
             .catch(() => this.setState({myOrders: []}))
     }
 

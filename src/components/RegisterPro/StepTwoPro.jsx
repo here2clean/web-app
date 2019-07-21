@@ -28,14 +28,14 @@ class StepTwoPro extends React.Component {
     };
 
     errorHandling() {
-        const rnaReg = /^[0-9]{5}(?:-[0-9]{4})?$/;
+        const rnaReg = /^[0-9]{9}(?:-[0-9]{4})?$/;
         const { numberRna, name, description } = this.state;
 
         if (numberRna === null || name === null || description === null) {
             return 'Every fields must be filled';
         }
 
-        if (!rnaReg.test(numberRna)) return 'Incorrect ZIP code format';
+        if (!rnaReg.test(numberRna)) return 'Incorrect RNA code format';
 
         return false;
     }
