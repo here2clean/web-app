@@ -18,6 +18,7 @@ import { createBrowserHistory } from "history";
 import ShopContainer from "./components/Shop/ShopContainer";
 import RegisterPro from "./components/RegisterPro/RegisterPro";
 import ShopContainerPro from "./components/Shop.Pro/ShopContainer.Pro"
+import OrdersContainer from "./components/Orders/OrdersContainer";
 
 const customHistory = createBrowserHistory();
 
@@ -43,7 +44,7 @@ class App extends React.Component {
             userContext: {
                 user: JSON.parse(localStorage.getItem('user')) || null,
                 setUser: (user) => {
-                    this.setState({auth:true, userContext:{user:user, setUser: this.state.userContext.setUser, disconnect: this.state.userContext.disconnect, deleteProduct: this.state.userContext.deleteProduct, addProducts: this.state.userContext.addProducts, shop: this.state.shop}});
+                    this.setState({auth:true, userContext:{user:user, setUser: this.state.userContext.setUser, disconnect: this.state.userContext.disconnect, clearCart: this.state.userContext.clearCart, deleteProduct: this.state.userContext.deleteProduct, addProducts: this.state.userContext.addProducts, shop: this.state.shop}});
                 },
                 disconnect: () => {
                     this.setState({auth:false});
@@ -125,6 +126,7 @@ class App extends React.Component {
                             <PrivateRoute path='/events/:eventname' component={() => <EventsContainer selected={['events']}/>} />
                             <PrivateRoute path='/eventsByAssociation/:associationId' component={() => <EventsContainer selected={['events']}/>} />
                             <PrivateRoute exact path='/events' component={() => <EventsContainer selected={['events']}/>} />
+                            <PrivateRoute exact path='/orders' component={() => <OrdersContainer selected={['orders']}/>} />
                             <PrivateRoute exact path='/conditions' component={Conditions} />
                             <PrivateRoute exact path='/sandbox' component={Sandbox}/>
                             <PrivateRoute exact path='/loading' component={Loading}/>

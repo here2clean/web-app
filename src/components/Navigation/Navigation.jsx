@@ -62,6 +62,9 @@ class Navigation extends React.Component {
                     <Menu.Item key="events">
                         <NavLink to="/events"><Icon type="pushpin" />Events</NavLink>
                     </Menu.Item>
+                    <Menu.Item key="orders">
+                        <NavLink to="/orders"><Icon type="shopping" />Orders</NavLink>
+                    </Menu.Item>
                     <Menu.Item className="force-align-right" onClick={this.showCart}>
                         <Badge count={badgeCount} showZero>
                             <Icon type="shopping-cart" />
